@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% if request.user.is_authenticated %}
+        <h2>Already Login <a href="/dashboard">Go to Dashobard</a></h2>
+    {% else %}
+        <h1>login</h1>
+        <form action="." method="post">
+            {{form.as_p}}
+            {% csrf_token %}
+            <!-- {% for user in users %}
+            {{user.email}}
+            {{user.first_name}}
+            {{user.last_name}}<br />
+            {% endfor %} -->
+            <button type="submit">Submit</button>
+            <br/>
+                <b>OR</b>
+            <br />
+            <a href="/register">Register</a>
+        </form>
+    {% endif %}
+</body>
+</html>
