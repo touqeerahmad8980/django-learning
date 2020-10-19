@@ -7,6 +7,7 @@
 {% block content %}
 
         <div class="container-fluid">
+                
             <div class="row no-gutter">
                 <div class="col-md-12 bg-light">
                     <div class="login d-flex align-items-center py-5">
@@ -27,7 +28,13 @@
                                         </div>
                                         <div class="custom-control custom-checkbox mb-3 pl-0">
                                             <input id="customCheck1" type="checkbox" checked class="custom-control-input">
-                                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Add Item</button>
+                                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                            {% if item.todo_name %}
+                                                Edit Item
+                                            {% else %}
+                                                Add Item
+                                            {% endif %}
+                                        </button>
                                     </form>
                                 </div>
                             </div>
