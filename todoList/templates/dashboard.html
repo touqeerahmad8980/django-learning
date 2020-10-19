@@ -1,15 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
     {% if request.user.is_authenticated %}
-        Welcome <h2>{{user.first_name}} {{user.last_name}}</h2>
-        <h2> <a href="/logout">Logout</a></h2>
+    <div class="container">
+        <div class="pt-3">
+            <h2>Dashboard</h2>
+            <ul class="list-group">
+                {% for todo in todo_list reversed %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><b>{{forloop.counter}}.</b> {{todo.todo_name}}</span>
+                        <div class="btn-group">
+                            <a href="/edit-item/{{todo.id}}" class="btn btn-primary">Edit</a>
+                            <a href="/remove-item/{{todo.id}}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                
+                {% if  todo_list|length == 0 %}
+                    <h2 class="text-center">No Data Found</h2>
+                {% endif %}
+                    
+            </ul>
+        </div>
+    </div>
     {% else %}
         <h2>User Not login <a href="/">Login</a></h2>
         <br />
@@ -17,5 +34,4 @@
         <br />
         <a href="register/">Register</a>
     {% endif %}
-</body>
-</html>
+{% endblock %}

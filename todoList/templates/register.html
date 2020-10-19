@@ -1,15 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-    <form action="." method="post">
-        {{form.as_p}}
-        {% csrf_token %}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}
+    Logout
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <h2>Already Register and Logged <a href="/dashboard">Go to Dashobard</a></h2>
+    {% else %}
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <div class="col-md-12 bg-light">
+                    <div class="login d-flex align-items-center py-5">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-10 col-xl-7 mx-auto">
+                                    <h3 class="display-4">Register</h3>
+                                    <form action="." method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group mb-3">
+                                            {{ form.username }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            {{ form.first_name }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            {{ form.last_name }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            {{ form.email }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            {{ form.password }}
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            {{ form.password2 }}
+                                        </div>
+                                        <div class="custom-control custom-checkbox mb-3 pl-0">
+                                            <input id="customCheck1" type="checkbox" checked class="custom-control-input">
+                                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign in</button>
+                                        <a href="/">Login</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('#id_username').addClass('form-control rounded-pill border-0 shadow-sm px-4').attr('placeholder','Username')
+        $('#id_first_name').addClass('form-control rounded-pill border-0 shadow-sm px-4').attr('placeholder','First Name')
+        $('#id_last_name').addClass('form-control rounded-pill border-0 shadow-sm px-4').attr('placeholder','Last Name')
+        $('#id_email').addClass('form-control rounded-pill border-0 shadow-sm px-4').attr('placeholder','Email')
+        $('#id_password').addClass('form-control rounded-pill border-0 shadow-sm px-4').attr('placeholder','Password')
+        $('#id_password2').addClass('form-control rounded-pill border-0 shadow-sm px-4').attr('placeholder','Confirm Password')
+    </script>
+{% endblock %}

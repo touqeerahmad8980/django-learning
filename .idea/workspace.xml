@@ -23,9 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d30a7f2b-ab24-4aed-90bb-91386128c91b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/myTodoList.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/myTodoList.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/todoList/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,8 +56,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/manage.py" />
+    <property name="settings.editor.selected.configurable" value="xml.defaultSchemas" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -68,7 +67,12 @@
       </console-settings>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.manage">
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -181,12 +185,34 @@
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
+      <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="manage" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="myTodoList" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/manage.py" />
+      <option name="PARAMETERS" value="runserver" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -263,6 +289,9 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.manage" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -293,10 +322,26 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="224" y="63" width="992" height="740" key="SettingsEditor" timestamp="1603087529021">
+    <state x="349" y="110" width="732" height="647" key="#Inspections" timestamp="1603089799376">
       <screen x="0" y="0" width="1440" height="857" />
     </state>
-    <state x="224" y="63" width="992" height="740" key="SettingsEditor/0.0.1440.857@0.0.1440.857" timestamp="1603087529021" />
+    <state x="349" y="110" width="732" height="647" key="#Inspections/0.0.1440.857@0.0.1440.857" timestamp="1603089799376" />
+    <state x="178" y="0" width="1084" height="857" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603089618253">
+      <screen x="0" y="0" width="1440" height="857" />
+    </state>
+    <state x="178" y="0" width="1084" height="857" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.857@0.0.1440.857" timestamp="1603089618253" />
+    <state x="503" y="160" width="424" height="594" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1603088742965">
+      <screen x="0" y="0" width="1440" height="857" />
+    </state>
+    <state x="503" y="160" width="424" height="594" key="#com.intellij.ide.macro.MacrosDialog/0.0.1440.857@0.0.1440.857" timestamp="1603088742965" />
+    <state x="503" y="210" width="424" height="494" key="FileChooserDialogImpl" timestamp="1603089572973">
+      <screen x="0" y="0" width="1440" height="857" />
+    </state>
+    <state x="503" y="210" width="424" height="494" key="FileChooserDialogImpl/0.0.1440.857@0.0.1440.857" timestamp="1603089572973" />
+    <state x="224" y="63" width="992" height="740" key="SettingsEditor" timestamp="1603089887589">
+      <screen x="0" y="0" width="1440" height="857" />
+    </state>
+    <state x="224" y="63" width="992" height="740" key="SettingsEditor/0.0.1440.857@0.0.1440.857" timestamp="1603089887589" />
     <state x="445" y="343" width="540" height="181" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1603087626306">
       <screen x="0" y="0" width="1440" height="857" />
     </state>

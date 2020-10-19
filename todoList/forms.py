@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import TodoItem
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=200)
@@ -18,3 +19,8 @@ class UserRegister(forms.ModelForm):
         if cd['password'] != cd['password2']:
             raise forms.ValidationError('password not match')
         return cd['password2']
+
+class TodoItemForm(forms.ModelForm):
+    class Meta:
+        model = TodoItem
+        fields = ('todo_name', 'start_date', 'end_date')
