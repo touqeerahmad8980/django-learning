@@ -11,3 +11,11 @@ class TodoItem(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+
+class UserActions(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
+    action_name = models.CharField(max_length=200)
+    action_detail = models.CharField(max_length=500)
+    created = created = models.DateTimeField(default=timezone.now)
+

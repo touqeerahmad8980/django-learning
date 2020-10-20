@@ -1,13 +1,15 @@
 from django.urls import path
-from todoList.views import index,dashboard,userRegister,addItem,removeItem,editItem
+from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('', index, name="Login"),
-    path('dashboard/', dashboard, name="Dashboard"),
-    path('logout/', auth_views.LogoutView.as_view(template_name='logout.html'), name='login'),
-    path('register/', userRegister, name="Register"),
-    path('add-item/', addItem, name="Add Item"),
-    path('remove-item/<int:id>/', removeItem, name="Remove"),
-    path('edit-item/<int:id>/', editItem, name="Edit")
+    path('', views.index, name="Login"),
+    path('dashboard/', views.dashboard, name="Dashboard"),
+    path('logout/', auth_views.LogoutView.as_view(template_name='account/logout.html'), name='login'),
+    path('register/', views.userRegister, name="Register"),
+    path('add-item/', views.addItem, name="Add Item"),
+    path('remove-item/<int:id>/', views.removeItem, name="Remove"),
+    path('edit-item/<int:id>/', views.editItem, name="Edit"),
+    path('activities/', views.activities, name="Activities"),
+    path('remove-activity/<int:id>/', views.removeActivities, name="Activities")
 ]
