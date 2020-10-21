@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm,UserRegister,TodoItemForm
 from django.http import HttpResponse
-from .models import TodoItem,UserActions
+from .models import TodoItem,UserActions,UserContacts
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
@@ -100,4 +100,13 @@ def exploreUsers(request):
     
 @csrf_exempt
 def followUsers(request):
-    return JsonResponse({'user_id': request.GET.get('selected_user_id')})
+    following_id = request.GET.get('selected_user_id')
+    alreadyFollow = UserContacts.objects.get(following_user_id= following_id)
+    res = {}
+    if alreadyFollow:
+        res = {'code':200, 'response':'already follow'}
+    else:
+        if following_id:
+            UserContacts.objects.create(user=request.user,following_user_id=following_id,friends=False)
+            res = {'code':200, 'following_user_id': following_id}
+    return JsonResponse(res)
