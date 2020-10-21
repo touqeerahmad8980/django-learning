@@ -19,3 +19,8 @@ class UserActions(models.Model):
     action_detail = models.CharField(max_length=500)
     created = created = models.DateTimeField(default=timezone.now)
 
+
+class UserContacts(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='follower')
+    following_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
+    friends = models.BooleanField()

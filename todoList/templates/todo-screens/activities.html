@@ -13,7 +13,7 @@
                 {% for activity in activities reversed %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <span>
-                            <span><b>{{activity.action_name}}</b> {{activity.created}}</span><br />
+                            <span><b>{{activity.action_name}}</b> <span style="font-size:14px;color:gray;margin-left:20px;">{{activity.created}}</span></span><br />
                             <p>{{activity.action_detail}}</p>
                         </span>
                         <div class="btn-group">

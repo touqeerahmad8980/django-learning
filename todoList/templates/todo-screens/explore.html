@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <div class="container">
+        <div class="pt-3">
+            <h2>Activites</h2>
+            <ul class="list-group flex-row">
+                {% for user in users reversed %}
+                    <li style="flex:0 0 30%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
+                        <input class="userId" type="hidden" value="{{user.id}}">
+                        <div class="card">
+                            <img class="card-img-top" src="{% static 'images/img_avatar1.png' %}" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title">{{user.first_name}} {{user.last_name}} 
+                                    {% if user.is_superuser == 1 %}
+                                        <span style="font-weight: bold;color: grey;font-size: 14px;margin-top: 5px;vertical-align: top;display: inline-block;">(Admin)</span>
+                                    {% endif %}
+                                </h4>
+                              <a class="follow" href="javascript:void(0)" class="btn btn-primary stretched-link">Follow</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                
+                {% if  users|length == 0 %}
+                    <h2 class="text-center">No Users Found</h2>
+                {% endif %}
+                    
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+  <script>
+        $('.follow').on('click', function() {
+            let userData = $(this).parents('li').children('.userId').val();
+            console.log(userData)
+            $.ajax({
+                type:'GET',
+                url:'/follow/',
+                dataType : "json",
+                contentType: "application/json; charset=utf-8",
+                data:{'selected_user_id':userData},
+                success: function(response) {
+                    console.log(response)
+                }
+            })
+        })
+  </script>
+{% endblock %}

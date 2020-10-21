@@ -3,7 +3,9 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm,UserRegister,TodoItemForm
 from django.http import HttpResponse
 from .models import TodoItem,UserActions
-
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_exempt
+from django.http.response import JsonResponse
 
 def index(request):
     if request.method == 'POST':
@@ -90,3 +92,12 @@ def removeActivities(request, id):
     item = UserActions.objects.get(id=id)
     item.delete()
     return redirect('/activities')
+
+
+def exploreUsers(request):
+    users = User.objects.all().exclude(id = request.user.id)
+    return render(request, 'todo-screens/explore.html', {'users':users})
+    
+@csrf_exempt
+def followUsers(request):
+    return JsonResponse({'user_id': request.GET.get('selected_user_id')})
