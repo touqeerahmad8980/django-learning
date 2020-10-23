@@ -10,23 +10,23 @@
     {% if request.user.is_authenticated %}
     <div class="container">
         <div class="pt-3">
-            <h2>Users</h2>
+            <h2>Friends</h2>
             <ul class="list-group flex-row">
-                {% for user in users reversed %}
-                    <li id="user{{user.id}}" style="flex:0 0 23%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
-                        <input class="userId" type="hidden" value="{{user.id}}">
+                {% for friend in friends reversed %}
+                    <li id="user{{friend.id}}" style="flex:0 0 23%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
+                        <input class="userId" type="hidden" value="{{friend.id}}">
                         <div class="card" style="min-height: 359px;">
                             <img class="card-img-top" src="{% static 'images/img_avatar1.png' %}" alt="Card image" style="width:100%">
                             <div class="card-body">
-                                <h4 class="card-title" style="white-space: nowrap;width: calc(100% - 58px);overflow: hidden;text-overflow: ellipsis;display: inline-block;font-size: 22px;">{{user.first_name}} {{user.last_name}}</h4>
-                                {% if user.is_superuser == 1 %}
+                                <h4 class="card-title" style="white-space: nowrap;width: calc(100% - 58px);overflow: hidden;text-overflow: ellipsis;display: inline-block;font-size: 22px;">{{friend.first_name}} {{friend.last_name}}</h4>
+                                {% if friend.is_superuser == 1 %}
                                     <span style="font-weight: bold;color: grey;font-size: 14px;margin-top:2px;vertical-align: top;display: inline-block;">(Admin)</span>
                                 {% endif %}
                                 {% load checkAlreadyFollow %}
-                                {% if request|checkAlreadyFollow:user.id == 0 %}
-                                    <a class="follow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Follow</a>
+                                {% if request|checkAlreadyFollow:friend.id == 0 %}
+                                    <a class="follow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Friend/Follow</a>
                                 {% else %}
-                                    <a class="unfollow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Unfollow</a>
+                                    <a class="unfollow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Unfriend/Unfollow</a>
                                 {% endif %}
 
                             </div>
@@ -34,8 +34,8 @@
                     </li>
                 {% endfor %}
                 
-                {% if  users|length == 0 %}
-                    <h2 class="text-center">No Users Found</h2>
+                {% if  friends|length == 0 %}
+                    <h2 class="text-center">No Friend Found</h2>
                 {% endif %}
                     
             </ul>
@@ -58,7 +58,7 @@
             data:{'selected_user_id':userData},
             success: function(response) {
                 if(response.code == 200){
-                    thisScope.removeClass('follow').addClass('unfollow').text('Unfollow');
+                    thisScope.removeClass('follow').addClass('unfollow').text('Unfriend/Unfollow');
                 }
             }
         })
@@ -76,7 +76,7 @@
             data:{'selected_user_id':userData},
             success: function(response) {
                 if(response.code == 200){
-                    thisScope.removeClass('unfollow').addClass('follow').text('Follow');
+                    thisScope.removeClass('unfollow').addClass('follow').text('Friend/Follow');
                 }
             }
         })

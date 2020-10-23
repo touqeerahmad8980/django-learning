@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <div class="container">
+        <div class="pt-3">
+            <h2>Follower</h2>
+            <ul class="list-group flex-row">
+                {% for follower in followers reversed %}
+                    <li id="user{{follower.id}}" style="flex:0 0 23%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
+                        <input class="userId" type="hidden" value="{{follower.id}}">
+                        <div class="card" style="min-height: 359px;">
+                            <img class="card-img-top" src="{% static 'images/img_avatar1.png' %}" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title" style="white-space: nowrap;width: calc(100% - 58px);overflow: hidden;text-overflow: ellipsis;display: inline-block;font-size: 22px;">{{follower.first_name}} {{follower.last_name}}</h4>
+                                {% if follower.is_superuser == 1 %}
+                                    <span style="font-weight: bold;color: grey;font-size: 14px;margin-top:2px;vertical-align: top;display: inline-block;">(Admin)</span>
+                                {% endif %}
+                                {% load checkAlreadyFollow %}
+                                {% if request|checkAlreadyFollow:follower.id == 0 %}
+                                    <a class="follow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Follow</a>
+                                {% else %}
+                                    <a class="unfollow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Unfollow</a>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                
+                {% if  followers|length == 0 %}
+                    <h2 class="text-center">No followers Found</h2>
+                {% endif %}
+                    
+            </ul>
+        </div>
+        <hr />
+        <hr />
+        <div class="pt-3">
+            <h2>Following</h2>
+            <ul class="list-group flex-row">
+                {% for following in followings reversed %}
+                    <li id="user{{following.id}}" style="flex:0 0 23%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
+                        <input class="userId" type="hidden" value="{{following.id}}">
+                        <div class="card" style="min-height: 359px;">
+                            <img class="card-img-top" src="{% static 'images/img_avatar1.png' %}" alt="Card image" style="width:100%">
+                            <div class="card-body">
+                                <h4 class="card-title" style="white-space: nowrap;width: calc(100% - 58px);overflow: hidden;text-overflow: ellipsis;display: inline-block;font-size: 22px;">{{following.first_name}} {{following.last_name}}</h4>
+                                {% if following.is_superuser == 1 %}
+                                    <span style="font-weight: bold;color: grey;font-size: 14px;margin-top:2px;vertical-align: top;display: inline-block;">(Admin)</span>
+                                {% endif %}
+                                {% load checkAlreadyFollow %}
+                                {% if request|checkAlreadyFollow:following.id == 0 %}
+                                    <a class="follow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Follow</a>
+                                {% else %}
+                                    <a class="unfollow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Unfollow</a>
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                
+                {% if followings|length == 0 %}
+                    <h2 class="text-center">No Followings Found</h2>
+                {% endif %}
+                    
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+  <script>
+    // follow user
+    $(document).on('click', '.follow' , function() {
+        thisScope = $(this);
+        let userData = $(this).parents('li').children('.userId').val();
+        $.ajax({
+            type:'GET',
+            url:'/follow/',
+            dataType : "json",
+            contentType: "application/json; charset=utf-8",
+            data:{'selected_user_id':userData},
+            success: function(response) {
+                if(response.code == 200){
+                    thisScope.removeClass('follow').addClass('unfollow').text('Unfollow');
+                }
+            }
+        })
+    });
+
+    // unfollow user
+    $(document).on('click', '.unfollow', function() {
+        thisScope = $(this);
+        let userData = $(this).parents('li').children('.userId').val();
+        $.ajax({
+            type:'GET',
+            url:'/unfollow/',
+            dataType : "json",
+            contentType: "application/json; charset=utf-8",
+            data:{'selected_user_id':userData},
+            success: function(response) {
+                if(response.code == 200){
+                    thisScope.removeClass('unfollow').addClass('follow').text('Follow');
+                }
+            }
+        })
+    })
+  </script>
+{% endblock %}

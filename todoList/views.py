@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
 
+
+@csrf_exempt
 def index(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -53,7 +55,7 @@ def addItem(request):
             new_form.save()
             action_name = new_form.todo_name+' Added'
             action_detail = request.user.first_name+' '+request.user.last_name+' added '+new_form.todo_name+' in list.'
-            userActionHandler(request, action_name, action_detail)
+            userActivityHandler(request, action_name, action_detail)
             return redirect('/dashboard')
     else:
         form = TodoItemForm()
@@ -65,7 +67,7 @@ def removeItem(request, id):
     item.delete()
     action_name = item.todo_name+' removed'
     action_detail = request.user.first_name+' '+request.user.last_name+' remove '+item.todo_name+' from list.'
-    userActionHandler(request, action_name, action_detail)
+    userActivityHandler(request, action_name, action_detail)
     return redirect('/dashboard')
 
 
@@ -80,7 +82,7 @@ def editItem(request, id):
     return render(request, 'todo-screens/todo-form.html', {'form':form, 'item':selectedItem})
 
 
-def userActionHandler(request, name, detail):
+def userActivityHandler(request, name, detail):
     UserActions.objects.create(user = request.user, action_name = name, action_detail= detail);
 
 
@@ -92,21 +94,3 @@ def removeActivities(request, id):
     item = UserActions.objects.get(id=id)
     item.delete()
     return redirect('/activities')
-
-
-def exploreUsers(request):
-    users = User.objects.all().exclude(id = request.user.id)
-    return render(request, 'todo-screens/explore.html', {'users':users})
-    
-@csrf_exempt
-def followUsers(request):
-    following_id = request.GET.get('selected_user_id')
-    alreadyFollow = UserContacts.objects.get(following_user_id= following_id)
-    res = {}
-    if alreadyFollow:
-        res = {'code':200, 'response':'already follow'}
-    else:
-        if following_id:
-            UserContacts.objects.create(user=request.user,following_user_id=following_id,friends=False)
-            res = {'code':200, 'following_user_id': following_id}
-    return JsonResponse(res)

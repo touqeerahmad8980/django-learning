@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import followSystemViews
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -15,7 +16,10 @@ urlpatterns = [
     # user activities page
     path('activities/', views.activities, name="Activities"),
     path('remove-activity/<int:id>/', views.removeActivities, name="Activities"),
-    # contacts functions pages
-    path('explore/', views.exploreUsers, name="Users"),
-    path('follow/', views.followUsers, name="Follow")
+    # follower systems page url
+    path('explore/', followSystemViews.exploreUsers, name="Users"),
+    path('follow/', followSystemViews.followUsers, name="Follow"),
+    path('unfollow/', followSystemViews.unFollowUsers, name="Unfollow"),
+    path('followers/', followSystemViews.userFollowers, name="Followers"),
+    path('friends/', followSystemViews.userFriends, name="Friends")
 ]
