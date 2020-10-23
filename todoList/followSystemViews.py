@@ -15,7 +15,7 @@ def followUsers(request):
     following_id = request.GET.get('selected_user_id')
     # check already follow
     try:
-        alreadyFollow = UserContacts.objects.get(following_user_id= following_id)
+        alreadyFollow = UserContacts.objects.get(user_id=request.user.id, following_user_id= following_id)
     except UserContacts.DoesNotExist:
         alreadyFollow = None
     # check for friends true
@@ -41,7 +41,7 @@ def followUsers(request):
 @csrf_exempt
 def unFollowUsers(request):
     following_id = request.GET.get('selected_user_id')
-    follower = get_object_or_404(UserContacts, following_user_id= following_id)
+    follower = get_object_or_404(UserContacts,user_id=request.user.id, following_user_id= following_id)
     follower.delete()
     # if both follow then
     try:
