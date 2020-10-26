@@ -6,7 +6,7 @@ from .models import TodoItem,UserActions,UserContacts
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import JsonResponse
-
+from django.core import serializers
 
 @csrf_exempt
 def index(request):
@@ -90,7 +90,44 @@ def activities(request):
     user_activities = UserActions.objects.all().filter(user_id=request.user.id)
     return render(request, 'todo-screens/activities.html', {'activities': user_activities})
 
+
 def removeActivities(request, id):
     item = UserActions.objects.get(id=id)
     item.delete()
     return redirect('/activities')
+
+
+def friendsTodo(request):
+    allFriends = []
+    users = User.objects.all()
+    contacts = UserContacts.objects.all()
+    for user in users:
+        for contact in contacts:
+            if contact.user_id == request.user.id:
+                if contact.friends == True and contact.following_user.id == user.id:
+                    allFriends.append(user)
+    return render(request, 'todo-screens/friendsTodoList.html', {'friends':allFriends})
+    
+
+@csrf_exempt
+def getFriendsTodo(request, friendId):
+    if friendId:
+        todoItems = TodoItem.objects.all().filter(user_id=friendId)
+        data = serializers.serialize('json', TodoItem.objects.all().filter(user_id=friendId), fields=('todo_name','start_date','end_date'), use_natural_foreign_keys=True, use_natural_primary_keys=True)
+    return JsonResponse({'friendTodos':data})
+
+
+@csrf_exempt
+def saveFriendTodo(request):
+    data = request.GET
+    res = {}
+    if request.method == "GET":
+        if data:
+            TodoItem.objects.create(todo_name=data['todo_name'], start_date=data['start_date'], end_date=data['end_date'], user=request.user)
+            action_name = data['todo_name']+' Saved'
+            action_detail = request.user.first_name+' '+request.user.last_name+' saved '+data['todo_name']+' from friends todos.'
+            userActivityHandler(request, action_name, action_detail)
+            res = {'code':200, 'data': data}
+    else:
+        res = {error: 'something went wrong'}
+    return JsonResponse(res)

@@ -13,6 +13,9 @@ urlpatterns = [
     path('add-item/', views.addItem, name="Add Item"),
     path('remove-item/<int:id>/', views.removeItem, name="Remove"),
     path('edit-item/<int:id>/', views.editItem, name="Edit"),
+    path('friends-todo/',views.friendsTodo, name="Friends Todo"),
+    path('get-friends-todo/<int:friendId>/',views.getFriendsTodo, name="Get Friends Todo"),
+    path('save-friend-todo/',views.saveFriendTodo, name="Save Friend Todo"),
     # user activities page
     path('activities/', views.activities, name="Activities"),
     path('remove-activity/<int:id>/', views.removeActivities, name="Activities"),
@@ -22,4 +25,5 @@ urlpatterns = [
     path('unfollow/', followSystemViews.unFollowUsers, name="Unfollow"),
     path('followers/', followSystemViews.userFollowers, name="Followers"),
     path('friends/', followSystemViews.userFriends, name="Friends")
+
 ]

@@ -12,6 +12,9 @@ class TodoItem(models.Model):
     class Meta:
         ordering = ('created',)
 
+    def natural_key(self):
+        return (self.todo_name, self.start_date, self.end_date)
+
 
 class UserActions(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")

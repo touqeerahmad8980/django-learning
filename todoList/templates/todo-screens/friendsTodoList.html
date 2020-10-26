@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+    <div class="container">
+        <div class="pt-3">
+            <h2 class="mb-5">Friends Todo List</h2>
+            
+            {% if friends|length != 0 %}
+                <div class="form-group">
+                    <label for="sel1">Select Friend For Todo:</label>
+                    <select class="form-control" id="friendSelect">
+                        <option value="">Select Friend</option>
+                        {% for friend in friends %}
+                            <option value="{{friend.id}}" >{{friend.first_name}} {{friend.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% else %}
+                <h2 class="text-center">No Friend Yet!</h2>
+            {% endif %}
+                
+                
+            <ul id="friendTodoList" class="list-group">
+                {% for todo in todo_list reversed %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><b>{{forloop.counter}}.</b> {{todo.todo_name}}</span>
+                        <div class="btn-group">
+                            <a href="/edit-item/{{todo.id}}" class="btn btn-primary">Edit</a>
+                            <a href="/remove-item/{{todo.id}}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </li>
+                {% endfor %}
+                
+                <!-- {% if  todo_list|length == 0 %}
+                    <h2 class="text-center">No Data Found</h2>
+                {% endif %} -->
+                    
+            </ul>
+        </div>
+    </div>
+    {% else %}
+        <h2>User Not login <a href="/">Login</a></h2>
+        <br />
+        <b>OR</b>
+        <br />
+        <a href="register/">Register</a>
+    {% endif %}
+{% endblock %}
+
+{% block script %}
+    <script>
+        $(document).on('change','#friendSelect', function(){
+            let friend_id = $(this).val();
+            if(friend_id != ''){
+                $.ajax({
+                    type:'GET',
+                    url:'/get-friends-todo/'+friend_id,
+                    dataType : "json",
+                    contentType: "application/json; charset=utf-8",
+                    data:{'friend_id':friend_id},
+                    success: function(response) {
+                        let data = JSON.parse(response.friendTodos);
+                        $('#friendTodoList').empty()
+                        data.forEach(function(todo, index){
+                            $('#friendTodoList').append(`
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <input type="hidden" value='${JSON.stringify(todo.fields)}' max="100000">
+                                    <span><b>${index+1}.</b> ${todo.fields.todo_name}</span>
+                                    <div class="btn-group">
+                                        <a class="saveTodo" href="javascript:(0)" class="btn btn-primary">Save</a>
+                                    </div>
+                                </li>
+                            `)
+                        })
+                    }
+                })
+            }
+        });
+
+        $(document).on('click','.saveTodo', function(){
+            console.log($(this).val());
+            let data = $(this).parents('li').children('input').val();
+            if(data != ''){
+                $.ajax({
+                    type:'GET',
+                    url:'/save-friend-todo/',
+                    dataType : "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.parse(data),
+                    success: function(response) {
+                        console.log(response)
+                        if(response.code == 200){
+                            alert(response.data.todo_name+' Saved successfully.')
+                            window.location.href = '/dashboard'
+                        }
+                    }
+                })
+            }
+        });
+    </script>
+{% endblock %}

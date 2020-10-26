@@ -91,6 +91,7 @@
             data:{'selected_user_id':userData},
             success: function(response) {
                 if(response.code == 200){
+                    window.location.reload();
                     thisScope.removeClass('follow').addClass('unfollow').text('Unfollow');
                 }
             }
@@ -109,6 +110,7 @@
             data:{'selected_user_id':userData},
             success: function(response) {
                 if(response.code == 200){
+                    window.location.reload();
                     thisScope.removeClass('unfollow').addClass('follow').text('Follow');
                 }
             }
