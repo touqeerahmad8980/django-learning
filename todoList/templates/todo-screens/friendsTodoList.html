@@ -9,7 +9,6 @@
     <div class="container">
         <div class="pt-3">
             <h2 class="mb-5">Friends Todo List</h2>
-            
             {% if friends|length != 0 %}
                 <div class="form-group">
                     <label for="sel1">Select Friend For Todo:</label>
@@ -79,6 +78,8 @@
                         })
                     }
                 })
+            }else{
+                $('#friendTodoList').empty()
             }
         });
 

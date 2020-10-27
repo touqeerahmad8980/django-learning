@@ -61,25 +61,18 @@ def userFollowers(request):
     allFollowings = []
     users = User.objects.all()
     contacts = UserContacts.objects.all()
-    for user in users:
-        for contact in contacts:
-            if contact.user_id == request.user.id:
-                if contact.following_user_id == user.id:
-                    allFollowings.append(user)
-            if contact.following_user_id == request.user.id:
-                if contact.user_id == user.id:
-                    allFollowers.append(user)
+    for contact in contacts:
+        if contact.user_id == request.user.id:
+            allFollowings.append(User.objects.get(id=contact.following_user_id))
+        if contact.following_user_id == request.user.id:
+            allFollowers.append(User.objects.get(id=contact.user_id))
     return render(request, 'todo-screens/followers.html', {'followers':allFollowers, 'followings':allFollowings})
 
 
 def userFriends(request):
     allFriends = []
-    users = User.objects.all()
-    contacts = UserContacts.objects.all()
-    for user in users:
-        for contact in contacts:
-            if contact.user_id == request.user.id:
-                if contact.friends == True and contact.following_user.id == user.id:
-                    allFriends.append(user)
+    contacts = UserContacts.objects.all().filter(user_id=request.user.id,friends=True)
+    for contact in contacts:
+        allFriends.append(User.objects.get(id=contact.following_user_id))
     return render(request, 'todo-screens/friends.html', {'friends':allFriends})
     

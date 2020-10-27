@@ -99,13 +99,9 @@ def removeActivities(request, id):
 
 def friendsTodo(request):
     allFriends = []
-    users = User.objects.all()
-    contacts = UserContacts.objects.all()
-    for user in users:
-        for contact in contacts:
-            if contact.user_id == request.user.id:
-                if contact.friends == True and contact.following_user.id == user.id:
-                    allFriends.append(user)
+    contacts = UserContacts.objects.all().filter(user_id=request.user.id,friends=True)
+    for contact in contacts:
+        allFriends.append(User.objects.get(id=contact.following_user_id))
     return render(request, 'todo-screens/friendsTodoList.html', {'friends':allFriends})
     
 
@@ -113,7 +109,7 @@ def friendsTodo(request):
 def getFriendsTodo(request, friendId):
     if friendId:
         todoItems = TodoItem.objects.all().filter(user_id=friendId)
-        data = serializers.serialize('json', TodoItem.objects.all().filter(user_id=friendId), fields=('todo_name','start_date','end_date'), use_natural_foreign_keys=True, use_natural_primary_keys=True)
+        data = serializers.serialize('json', todoItems, fields=('todo_name','start_date','end_date'), use_natural_foreign_keys=True, use_natural_primary_keys=True)
     return JsonResponse({'friendTodos':data})
 
 
