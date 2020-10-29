@@ -15,7 +15,7 @@
                     <select class="form-control" id="friendSelect">
                         <option value="">Select Friend</option>
                         {% for friend in friends %}
-                            <option value="{{friend.following_user_id.id}}" >{{friend.following_user.first_name}} {{friend.following_user.last_name}}</option>
+                            <option value="{{friend.following_user.id}}" >{{friend.following_user.first_name}} {{friend.following_user.last_name}}</option>
                         {% endfor %}
                     </select>
                 </div>
