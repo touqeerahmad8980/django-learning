@@ -57,22 +57,14 @@ def unFollowUsers(request):
 
 
 def userFollowers(request):
-    allFollowers = []
-    allFollowings = []
+    allFollowers = UserContacts.objects.all().filter(following_user_id=request.user.id)
+    allFollowings = UserContacts.objects.all().filter(user_id=request.user.id)
     users = User.objects.all()
     contacts = UserContacts.objects.all()
-    for contact in contacts:
-        if contact.user_id == request.user.id:
-            allFollowings.append(User.objects.get(id=contact.following_user_id))
-        if contact.following_user_id == request.user.id:
-            allFollowers.append(User.objects.get(id=contact.user_id))
     return render(request, 'todo-screens/followers.html', {'followers':allFollowers, 'followings':allFollowings})
 
 
 def userFriends(request):
-    allFriends = []
-    contacts = UserContacts.objects.all().filter(user_id=request.user.id,friends=True)
-    for contact in contacts:
-        allFriends.append(User.objects.get(id=contact.following_user_id))
+    allFriends = UserContacts.objects.all().filter(user_id=request.user.id,friends=True)
     return render(request, 'todo-screens/friends.html', {'friends':allFriends})
     

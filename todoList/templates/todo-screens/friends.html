@@ -13,17 +13,17 @@
             <h2>Friends</h2>
             <ul class="list-group flex-row">
                 {% for friend in friends reversed %}
-                    <li id="user{{friend.id}}" style="flex:0 0 23%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
-                        <input class="userId" type="hidden" value="{{friend.id}}">
+                    <li id="user{{friend.following_user.id}}" style="flex:0 0 23%;margin-right:15px;margin-bottom:15px;" class="list-group-item d-flex align-items-center border-0 p-0">
+                        <input class="userId" type="hidden" value="{{friend.following_user.id}}">
                         <div class="card" style="min-height: 359px;">
                             <img class="card-img-top" src="{% static 'images/img_avatar1.png' %}" alt="Card image" style="width:100%">
                             <div class="card-body">
-                                <h4 class="card-title" style="white-space: nowrap;width: calc(100% - 58px);overflow: hidden;text-overflow: ellipsis;display: inline-block;font-size: 22px;">{{friend.first_name}} {{friend.last_name}}</h4>
-                                {% if friend.is_superuser == 1 %}
+                                <h4 class="card-title" style="white-space: nowrap;width: calc(100% - 58px);overflow: hidden;text-overflow: ellipsis;display: inline-block;font-size: 22px;">{{friend.following_user.first_name}} {{friend.following_user.last_name}}</h4>
+                                {% if friend.following_user.is_superuser == 1 %}
                                     <span style="font-weight: bold;color: grey;font-size: 14px;margin-top:2px;vertical-align: top;display: inline-block;">(Admin)</span>
                                 {% endif %}
                                 {% load checkAlreadyFollow %}
-                                {% if request|checkAlreadyFollow:friend.id == 0 %}
+                                {% if request|checkAlreadyFollow:friend.following_user.id == 0 %}
                                     <a class="follow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Friend/Follow</a>
                                 {% else %}
                                     <a class="unfollow" style="display:block;" href="javascript:void(0)" class="btn btn-primary stretched-link">Unfriend/Unfollow</a>

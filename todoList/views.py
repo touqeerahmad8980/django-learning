@@ -98,10 +98,7 @@ def removeActivities(request, id):
 
 
 def friendsTodo(request):
-    allFriends = []
-    contacts = UserContacts.objects.all().filter(user_id=request.user.id,friends=True)
-    for contact in contacts:
-        allFriends.append(User.objects.get(id=contact.following_user_id))
+    allFriends = UserContacts.objects.all().filter(user_id=request.user.id,friends=True)
     return render(request, 'todo-screens/friendsTodoList.html', {'friends':allFriends})
     
 
